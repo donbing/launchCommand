@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Missiles!</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    
+    <style type="text/css">
+      html{height:100%}
+      body {
+        overflow	: hidden;
+        height: 100%;
+        padding		: 0;
+        margin		: 0;
+        background-color: #BBB;
+      }
+      button{
+        width: 100%;
+      }
+      #container {
+        width		: 100%;
+        height		: 100%;
+        overflow	: hidden;
+        padding		: 0;
+        margin		: 0;
+        -webkit-user-select	: none;
+        -moz-user-select	: none;
+        background-color: aquamarine;
+		  }
+    </style>
+  </head>
+  <body>
+    <form method="POST">
+      <button formaction="/fire">Fire</button>
+    </form>
+    <div id="container">
+    <h1>Bing-a-flinger</h1>
+    <p>tap the screen and drag to aim the flinger, press the fire button above to fling a missile</p>
+    
+    <img id="video" src="/video_feed.mjpeg" />
+
+    </div>
+    <script src="{{ url_for('static', filename='joystick.js') }}"></script>
+    <script>
+        var form = document.getElementById('container'),
+            direction = "", 
+            directing = false;
+
+        var joystick	= new VirtualJoystick({
+          container	: document.getElementById('container'),
+          mouseSupport	: true,
+        });
+
+        $('#container').on('touchstart mousedown', function(){
+          directing = true;
+        });
+        $('#container').on('touchend mouseup', function(){
+          directing = false;
+          $.post('/stop');
+        });
+        $('#container').on('dblclick', function(){
+          directing = false;
+          $.post('/fire');
+        });
+
+        setInterval(function(){
+          var currentDirection = 
+            (joystick.up()	? 'up'		: '')
+          + (joystick.down()	? 'down' 	: '')	
+          + (joystick.right()	? 'right'	: '')
+          + (joystick.left()	? 'left'	: '');
+          
+          if(directing && currentDirection && currentDirection !== direction)
+          {
+            console.log(direction = currentDirection);
+            $.post('/move/'+currentDirection);
+          }
+        }, 1/30 * 1000);
+      
+    </script>
+  </body>
+</html>
