@@ -20,11 +20,9 @@ sudo pip install flask
 In order to connect to the USB without being a super user, we need to add an udev rule.
 ```sh
 # 666 perms on device 1130:0202
-sudo touch /etc/udev/rules.d/99-missile.rules
-sudo echo SUBSYSTEM=="usb", ATTR{idVendor}=="1130", ATTR{idProduct}=="0202", MODE="0666" > /etc/udev/rules.d/99-missile.rules
+sudo sudo bash -c 'echo SUBSYSTEM=="usb", ATTR{idVendor}=="1130", ATTR{idProduct}=="0202", MODE="0666" > /etc/udev/rules.d/99-missile.rules'
 # restart udev 
 sudo udevadm trigger
-# occasionally getting permission errors when writing to the file, nano seems to work tho..
 ```
 
 ## github links
