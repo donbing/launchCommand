@@ -21,7 +21,7 @@
       body {
         height:100%;
         background-color: gray;
-        background-image: url("{{ url_for('static', filename='metal-background.jpg') }}");
+        background-image: url("{{ url_for('static', filename='compute-ea4c57a4.png') }}");
         font-family: 'Roboto', sans-serif;
         display: flex;
       }
@@ -93,10 +93,12 @@
 
         $('#joystick-container').on('touchstart mousedown', function(){
           directing = true;
+            console.log('directing:' + directing);
         });
         
-        $('#joystick-container').on('touchend mouseup', function(){
+        $('body').on('touchend mouseup', function(){
           directing = false;
+            console.log('directing:' + directing);
           $.post('/stop');
         });
 

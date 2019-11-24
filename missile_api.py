@@ -1,10 +1,17 @@
+from importlib import import_module
+import os
 from flask import Flask, render_template, request, redirect, url_for, Response
 from missile import MissileLauncher
-from camera import Camera
+
+try:
+  Camera = import_module('camera_pi').Camera
+except:
+  Camera = import_module('camera_opencv').Camera
 
 launcher = MissileLauncher()
 
 app = Flask(__name__)
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template("index.html")
