@@ -3,10 +3,10 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, Response
 from missile import MissileLauncher
 
-try:
-  Camera = import_module('camera_pi').Camera
-except:
-  Camera = import_module('camera_opencv').Camera
+#try:
+  #Camera = import_module('camera_pi').Camera
+#except:
+Camera = import_module('camera_opencv').Camera
 
 launcher = MissileLauncher()
 

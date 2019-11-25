@@ -82,23 +82,20 @@
 
         var joystick	= new VirtualJoystick({
           container	: document.getElementById('joystick-container'),
-          stickElement: undefined,
-          baseElement: undefined,
           mouseSupport	: true,
-          limitStickTravel: true,
-          // stationaryBase: true,
-          // baseY:1,
-          // baseX:1
+          limitStickTravel: true
         });
 
         $('#joystick-container').on('touchstart mousedown', function(){
           directing = true;
-            console.log('directing:' + directing);
+          direction = undefined;
+          console.log('directing:' + directing);
         });
         
         $('body').on('touchend mouseup', function(){
           directing = false;
-            console.log('directing:' + directing);
+          direction = undefined;
+          console.log('directing:' + directing);
           $.post('/stop');
         });
 
